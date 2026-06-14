@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>보험도감</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0c1e3c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="보험도감">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icons/apple-touch-icon-167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152.png">
+<link rel="icon" sizes="32x32" href="icons/favicon-32.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div id="topbar">
+    <div class="logo">📘 보험도감</div>
+    <button id="toc-toggle">목차</button>
+    <div id="search-wrap">
+      <input id="search-input" type="text" placeholder="제목, 보험용어, 질병명으로 검색 (예: 후유장해, 실손, 종신보험...)" autocomplete="off">
+      <div id="search-results"></div>
+    </div>
+    <div id="page-indicator">- / -</div>
+  </div>
+  <div id="main">
+    <div id="sidebar"></div>
+    <div id="sidebar-backdrop"></div>
+    <div id="viewer"></div>
+    <div id="jumpbar">
+      <button id="jump-top" title="처음으로">⤒</button>
+      <button id="jump-up" title="이전 페이지">▲</button>
+      <button id="jump-down" title="다음 페이지">▼</button>
+    </div>
+  </div>
+</div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
