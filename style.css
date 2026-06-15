@@ -1,10 +1,11 @@
 :root {
   --navy: #0c1e3c;
-  --navy2: #122a52;
-  --gold: #d9a841;
-  --light: #bedhe2;
-  --gray: #8c9cb6;
+  --navy2: #e2e8f0;
+  --gold: #c9881f;
+  --light: #f4f6f9;
+  --gray: #5a6b85;
   --white: #ffffff;
+  --ink: #16243f;
 }
 
 * { box-sizing: border-box; }
@@ -14,8 +15,8 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
-  background: #05101f;
-  color: var(--white);
+  background: #ffffff;
+  color: var(--ink);
   overflow: hidden;
   -webkit-text-size-adjust: 100%;
 }
@@ -36,7 +37,7 @@ html, body {
   padding-top: calc(10px + env(safe-area-inset-top));
   padding-left: calc(16px + env(safe-area-inset-left));
   padding-right: calc(16px + env(safe-area-inset-right));
-  background: var(--navy);
+  background: #ffffff;
   border-bottom: 2px solid var(--navy2);
   z-index: 30;
   position: relative;
@@ -51,9 +52,9 @@ html, body {
 }
 
 #toc-toggle {
-  background: var(--navy2);
+  background: var(--light);
   border: 1px solid var(--gold);
-  color: var(--gold);
+  color: var(--navy);
   border-radius: 8px;
   padding: 8px 14px;
   font-size: 14px;
@@ -61,7 +62,7 @@ html, body {
   font-weight: 700;
   white-space: nowrap;
 }
-#toc-toggle:hover { background: var(--gold); color: var(--navy); }
+#toc-toggle:hover { background: var(--gold); color: #ffffff; }
 
 #search-wrap {
   flex: 1;
@@ -73,8 +74,8 @@ html, body {
   padding: 10px 14px;
   border-radius: 8px;
   border: 1px solid var(--navy2);
-  background: #0a1730;
-  color: var(--white);
+  background: var(--light);
+  color: var(--ink);
   font-size: 15px;
   outline: none;
 }
@@ -87,19 +88,19 @@ html, body {
   right: 0;
   max-height: 60vh;
   overflow-y: auto;
-  background: var(--navy2);
+  background: #ffffff;
   border: 1px solid var(--gold);
   border-radius: 8px;
   display: none;
   z-index: 40;
-  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+  box-shadow: 0 10px 30px rgba(12,30,60,.18);
 }
 #search-results.show { display: block; }
 
 .result-item {
   padding: 10px 14px;
   cursor: pointer;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(12,30,60,.06);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -129,7 +130,7 @@ html, body {
 #sidebar {
   width: 300px;
   flex-shrink: 0;
-  background: var(--navy);
+  background: #ffffff;
   border-right: 2px solid var(--navy2);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -142,7 +143,7 @@ html, body {
 }
 
 .toc-part {
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(12,30,60,.08);
 }
 .toc-part-head {
   padding: 12px 16px;
@@ -152,8 +153,9 @@ html, body {
   align-items: center;
   font-weight: 700;
   font-size: 14px;
+  color: var(--ink);
 }
-.toc-part-head:hover { background: rgba(255,255,255,.05); }
+.toc-part-head:hover { background: var(--light); }
 .toc-part.active .toc-part-head {
   background: rgba(217,168,65,.16);
   border-left: 3px solid var(--gold);
@@ -176,10 +178,10 @@ html, body {
   display: flex;
   gap: 8px;
 }
-.toc-item:hover { color: var(--gold); background: rgba(255,255,255,.04); }
+.toc-item:hover { color: var(--gold); background: var(--light); }
 .toc-item .ti-no { color: var(--gold); font-weight: 700; min-width: 22px; }
 .toc-item.active {
-  color: var(--white);
+  color: var(--ink);
   background: rgba(217,168,65,.14);
   font-weight: 700;
   border-left: 3px solid var(--gold);
@@ -191,7 +193,7 @@ html, body {
   flex: 1;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  background: #05101f;
+  background: #ffffff;
 }
 
 .slide {
@@ -200,15 +202,72 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Page "frame" around every slide image. Some source images bleed
+   color/dark backgrounds to the very edge of the 1000x1414 canvas, which
+   made them look cropped/edge-to-edge in the viewer. This frame guarantees
+   a small uniform margin on all sides regardless of the image's own
+   content. The margin is colored to match the viewer background (#ffffff)
+   so it's invisible/seamless rather than a visible card.
+   IMPORTANT: height/width must be set to 100% (not just max-height/
+   max-width) so the percentage sizing on the inner <img> has a definite
+   box to resolve against - otherwise the img renders at its native
+   1000x1414px size and overflows/overlaps neighboring slides. */
+.frame {
+  background: #ffffff;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .slide img {
-  max-height: 100%;
-  max-width: 100%;
+  display: block;
+  /* Explicit width/height:100% (instead of max-width/max-height) gives the
+     image a definite box equal to the frame's full content area. With that
+     definite box, object-fit:contain scales the image DOWN to fit inside
+     it while preserving aspect ratio and NEVER cropping - regardless of any
+     flex automatic-minimum-size quirks. This replaces the previous
+     max-width/max-height + min-width:0/min-height:0 approach, which still
+     left "many pages" appearing cropped because the flex sizing algorithm
+     could resolve width and height independently (stretching the box off
+     the image's own ratio) before max-* clamped one axis, leaving a
+     mismatched box that got clipped by .frame's overflow:hidden. */
+  width: calc(100% * var(--zoom, 1));
+  height: calc(100% * var(--zoom, 1));
   object-fit: contain;
-  box-shadow: 0 0 40px rgba(0,0,0,.6);
-  border-radius: 4px;
+  transition: width .15s ease, height .15s ease;
+}
+
+/* ---------- Zoom ---------- */
+/* When zoomed in (--zoom > 1) the image becomes larger than its frame.
+   Switch the frame to a scrollable, top-left-anchored box so the user can
+   pan around the enlarged page instead of having the overflow clipped or
+   trapped by flex centering (centered overflow is partly unreachable via
+   scroll in most browsers). */
+#app.zoomed .frame {
+  overflow: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: grab;
+  touch-action: none;
+}
+
+#app.zoomed .frame.dragging {
+  cursor: grabbing;
+}
+
+#app.zoomed .frame img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* ---------- Jump buttons ---------- */
@@ -232,9 +291,26 @@ html, body {
   cursor: pointer;
 }
 #jumpbar button:hover { background: var(--gold); color: var(--navy); }
+#jumpbar button:disabled { opacity: .35; cursor: default; }
+#jumpbar button:disabled:hover { background: rgba(18,42,82,.85); color: var(--gold); }
+
+#zoom-indicator {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(217,168,65,.4);
+  background: rgba(18,42,82,.85);
+  color: #cdd6e8;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
 
 ::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-thumb { background: var(--navy2); border-radius: 6px; }
+::-webkit-scrollbar-thumb { background: #c7d0dc; border-radius: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
 /* ---------- Responsive: tablet/iPad & mobile ---------- */
@@ -303,10 +379,12 @@ html, body {
     height: 40px;
     font-size: 16px;
   }
-
-  .slide {
-    padding: 8px;
+  #zoom-indicator {
+    width: 40px;
+    height: 22px;
+    font-size: 10px;
   }
+
 }
 
 @media (max-width: 480px) {

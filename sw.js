@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v18';
+const CACHE_VERSION = 'v35';
 const SHELL_CACHE = 'insurance-guide-shell-' + CACHE_VERSION;
 const IMAGE_CACHE = 'insurance-guide-images-' + CACHE_VERSION;
 
