@@ -215,10 +215,19 @@ html, body {
    IMPORTANT: height/width must be set to 100% (not just max-height/
    max-width) so the percentage sizing on the inner <img> has a definite
    box to resolve against - otherwise the img renders at its native
-   1000x1414px size and overflows/overlaps neighboring slides. */
+   1000x1414px size and overflows/overlaps neighboring slides.
+   The 7mm padding (box-sizing:border-box, so it's subtracted from the
+   100% box rather than added on top) gives every page the SAME gap
+   between the screen edge and the visible page content, independent of
+   each source image's own embedded margins (which vary page to page).
+   The inner <img> is sized as a percentage of this padded content box,
+   so it automatically shrinks to respect the padding - including while
+   zoomed, since .frame keeps its fixed 100% outer size and clips/scrolls
+   the oversized image via overflow, never growing into neighboring
+   slides. */
 .frame {
   background: #ffffff;
-  padding: 0;
+  padding: 7mm;
   box-sizing: border-box;
   height: 100%;
   width: 100%;
